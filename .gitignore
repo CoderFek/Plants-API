@@ -134,3 +134,7 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+
+#data
+data.json
+cleaned_data.json
