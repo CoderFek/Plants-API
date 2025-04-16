@@ -138,3 +138,4 @@ GitHub.sublime-settings
 #data
 data.json
 cleaned_data.json
+jwt_urls.txt

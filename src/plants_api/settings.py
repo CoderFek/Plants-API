@@ -48,14 +48,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'djoser',
     # 'rest_framework.authtoken',
-    'core'
+    'core',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -172,3 +174,9 @@ DJOSER = {
         'activation': 'djoser.email.ActivationEmail',
     }
 }
+
+CORS_ALLOWED_ORIGINS = os.getenv(
+    'CORS_ALLOWED_ORIGINS','http://localhost:3000,http://127.0.0.1:3000'
+    ).split(',')
+
+CORS_ALLOW_CREDENTIALS = True
