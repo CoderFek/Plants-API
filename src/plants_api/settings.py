@@ -147,6 +147,9 @@ EMAIL_HOST_USER = os.getenv('BREVO_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('BREVO_PASS_KEY')
 DEFAULT_FROM_EMAIL = os.getenv('BREVO_EMAIL')
 
+DOMAIN = os.getenv('DOMAIN')
+SITE_NAME = 'Plants API'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -154,7 +157,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'core.authentication.CustomJWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES' : [
@@ -174,6 +177,14 @@ DJOSER = {
         'activation': 'djoser.email.ActivationEmail',
     }
 }
+
+AUTH_COOKIE = 'access'
+AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 5
+AUTH_COOKIE_REFRESH_MAX_AGE = 60 * 60 * 5
+AUTH_COOKIE_SECURE = os.getenv('AUTH_COOKIE_SECURE', 'True') == 'True'
+AUTH_COOKIE_HTTP_ONLY = True
+AUTH_COOKIE_PATH = '/'
+AUTH_COOKIE_SAMESITE = 'None'
 
 CORS_ALLOWED_ORIGINS = os.getenv(
     'CORS_ALLOWED_ORIGINS','http://localhost:3000,http://127.0.0.1:3000'
