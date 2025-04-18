@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'djoser',
-    # 'rest_framework.authtoken',
+    'social_django',
     'core',
 ]
 
@@ -136,6 +136,11 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static/'
 
+AUTHENTICATION_BACKEND = [
+    'social_core.backends.google.GoogleOAuth2',
+    'django.auth.contrib.backend.ModelBackend'
+]
+
 
 # BREVO SETTINGS
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -175,7 +180,8 @@ DJOSER = {
     'TOKEN_MODEL': None,
     'EMAIL': {
         'activation': 'djoser.email.ActivationEmail',
-    }
+    },
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': os.getenv('REDIRECT_URLS')
 }
 
 AUTH_COOKIE = 'access'
@@ -185,6 +191,16 @@ AUTH_COOKIE_SECURE = os.getenv('AUTH_COOKIE_SECURE', 'True') == 'True'
 AUTH_COOKIE_HTTP_ONLY = True
 AUTH_COOKIE_PATH = '/'
 AUTH_COOKIE_SAMESITE = 'None'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('GOOGLE_AUTH_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('GOOGLE_AUTH_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'openid'
+]
+SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name','last_name']
+
 
 CORS_ALLOWED_ORIGINS = os.getenv(
     'CORS_ALLOWED_ORIGINS','http://localhost:3000,http://127.0.0.1:3000'
